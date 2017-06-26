@@ -3,7 +3,7 @@
 # 中身を任意の整形機能を付与してからテキストに書き出すコード
 
 require "yomu"
-require "../../rblib/txto"
+require "../lib/txto"
 
 # $bundle exec ruby yomu.rb [ext（ドッドは要らない、拡張子だけ）]
 # ext =>doc, docx, xls, xlsx, ppt, pptx, rtf, pdf
@@ -57,7 +57,7 @@ Dir.glob("*.#{ ext }").each do |f|
   base_name = File.basename(f, ".#{ ext }")
   renewal_f = f.gsub(/(.+)#{ ext }/, "\\1txt")
   FileUtils.cp(f, renewal_f)
-  
+
   # 書き込み
   File.open("#{ renewal_f }", "w+") do |file|
     doc.each_line do |line|
@@ -81,7 +81,7 @@ Dir.glob("*.#{ ext }").each do |f|
   workbook = Spreadsheet::ParseExcel.parse(f)
   #Get the first worksheet
   worksheet = workbook.worksheet(0)
-  
+
   #cycle over every row
   j = 0
   worksheet.each do |row|
