@@ -1,6 +1,7 @@
 # coding: utf-8
 require 'csv'
 require 'roo'
+require '../lib/txto'
 
 # カレントディレクトリにあるExcelファイルの読み込みをする。
 msexcels = Dir.glob("*.xlsx")
@@ -16,6 +17,7 @@ msexcels.each do |msxls|
     # セル内の改行を取り去る
     table[h].each do |cell|
       cell.gsub!(/\n/, '▼') if cell.class == String
+      cell.clean_char! if cell.class == String
       table[h] << "#{ cell }"
     end
     p table[h]
