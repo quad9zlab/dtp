@@ -5,6 +5,7 @@ require '../lib/txto'
 
 # カレントディレクトリにあるExcelファイルの読み込みをする。
 msexcels = Dir.glob("*.xlsx")
+renw_row = []
 # ExcelファイルをCSVファイルに変換して保存する。(ファイルが単一か複数かは問わない。)
 msexcels.each do |msxls|
   # 読み込んだファイルの拡張子より前の名前をオブジェクト化する。
@@ -14,30 +15,42 @@ msexcels.each do |msxls|
   # ここからはcsvの世界
   table = CSV.table("#{ origin_name }.csv", headers: :first_row)
   table.headers.each do |h|
+    renw_row.unshift(h)
     # セル内の改行を取り去る
     table[h].each do |cell|
       cell.gsub!(/\n/, '▼') if cell.class == String
       cell.clean_char! if cell.class == String
-      table[h] << "#{ cell }"
+      renw_row << cell
     end
-    p table[h]
-   end
+  end
+  p renw_row
 end
 
 
 exit
-  # CSVを生成する。
-  # ヘッダーを生成する。
-  renew_header = ["committee", "requirement", "contents", "count", "date"]
-  # まずは、コラムのカテゴリーごとに配列に収集して行の状態になっている内容を組み込む。
-  cells = [committee, requirement, contents, count, date]
-  # 二次配列の列と行を入れ替えて本来の状態にする。
-  trsp_arr = cells.transpose
-  # ヘッダーと内容をCSVとして生成する。
-  renew_csv = CSV.generate('', write_headers: true, headers: renew_header) do |csv|
-    trsp_arr.each { |i| csv << i }
-  end
-  # CSVファイルに上書きして保存する。
-  File.open("#{ origin_name }.csv", 'w+') do |file|
-    file.puts renew_csv
-  end
+
+array = [1, 2, 3]
+array.push(10, 100)
+p array
+
+# unshift
+a = [1, 2, 3]
+b = a.unshift 0
+p a #[0, 1, 2, 3]
+p b #[0, 1, 2, 3]
+
+# CSVを生成する。
+# ヘッダーを生成する。
+renew_header = ["committee", "requirement", "contents", "count", "date"]
+# まずは、コラムのカテゴリーごとに配列に収集して行の状態になっている内容を組み込む。
+cells = [committee, requirement, contents, count, date]
+# 二次配列の列と行を入れ替えて本来の状態にする。
+trsp_arr = cells.transpose
+# ヘッダーと内容をCSVとして生成する。
+renew_csv = CSV.generate('', write_headers: true, headers: renew_header) do |csv|
+  trsp_arr.each { |i| csv << i }
+end
+# CSVファイルに上書きして保存する。
+File.open("#{ origin_name }.csv", 'w+') do |file|
+  file.puts renew_csv
+end
