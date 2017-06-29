@@ -3,6 +3,12 @@ require 'csv'
 require 'roo'
 require '../lib/txto'
 
+# =====
+# エクセルファイルの内容をCSVに書き出すコード。
+# セル内改行を置き換え文字に変換し、セル内の文字列を整理するコード。
+# ruby seiri.rb
+# =====
+
 # カレントディレクトリにあるExcelファイルの読み込みをする。
 msexcels = Dir.glob("*.xlsx")
 renw_row = []
