@@ -10,6 +10,7 @@ require 'nkf'
 require 'fileutils' #=> 無くても動いているがいいのか。
 require '../lib/txto'
 
+
 # エクセルファイルのオブジェクトを取得
 io = Dir.glob("*.xlsx").shift
 fn = File.basename(io, ".xlsx")
@@ -32,37 +33,11 @@ add = Proc.new { |x, y| x + y }
 prefix = add.curry.("■")
 header = table[:header].map! { |i| prefix.("#{ i }") }
 text = header.zip(table[:content]).flatten.uniq.join("\n")
-p text
-exit
-
-# 2つの配列をまとめて意図通りに変更してからファイルへ書き出す。
 File.open "#{ fn }.txt", 'w' do |f|
-
-  text.each_line do |line|
-    line = NKF.nkf("-w Xm0", line)
-    # 全角の記号、数字、アルファベットと半角に変換する。
-    line.tr!("！-＇０-９：-＠Ａ-Ｚ＿｀ａ-ｚ", "!-'0-9:-@A-Z_`a-z")
-    # 上手く変換できない文字とその前後にあったものを含めてユニコードで指定して変換する。
-    line.tr!("\uFF0A-\uFF0B", "\u002A-\u002B") #=> 「*」「+」
-    line.tr!("\uFF0D", "\u002D") #=> 「-」
-    line.tr!("\uFF0F", "\u002F") #=> 「/」
-    line.tr!("\uFF3C", "\u005C") #=> 「\」
-    line.tr!("\uFF3E", "\u005E") #=> 「^」
-    line.tr!("\uFF5B-\uFF5D", "\u007B-\u007D") #=> 「{」「|」「}」
-    # 半角の記号を全角に変換する。
-    line.tr!("()[]", "（）［］")
-    # 行頭行末の不要な全角スペースや\s,\tなどを除去する。
-    # 'String#sprit!'では全角のスペースを削除出来ないかったので採用していない。
-    line.gsub!(/^[\s　]+|[\s　]+$/,'')
-    # 数値の桁区切りが全角であれば、半角に変換する。
-    line.gsub!(/(\d+)，(\d{2})/,'\1,\2')
-    # 句読点を変換する。
-    line.tr!("，", "、")
-    line.tr!("．", "。")
-  end
   f.puts text
 end
 
+exit
 
 # # 2行バージョン
 # prefix = ->(x, y) { x + y }.curry.("■")
