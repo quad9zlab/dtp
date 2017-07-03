@@ -33,7 +33,7 @@ add = Proc.new { |x, y| x + y }
 prefix = add.curry.("■")
 header = table[:header].map! { |i| prefix.("#{ i }") }
 text = header.zip(table[:content]).flatten.uniq.join("\n")
-File.open "#{ fn }.txt", 'w' do |f|
+File.open("#{ fn }.txt", 'w') do |f|
   f.puts text
 end
 

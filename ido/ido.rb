@@ -4,9 +4,17 @@ require 'csv'
 require './txt2yml'
 require '../lib/txto'
 
+files = Dir.glob("*.txt")
+lines = []
 
-texts = Dir.glob("*.txt")
-p texts
+files.each do |fn|
+  orgn = File.basename(fn, ".*")
+  File.open("#{ fn }", "r") do |f|
+    f.each_line { |l| lines << l.clean_char! }
+    File.open("#{ orgn }_regex.txt", "w") { |file| file.puts lines }
+  end
+end
+
 
 exit
 

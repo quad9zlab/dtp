@@ -35,6 +35,8 @@ class String
     self.gsub!(/(?<!\d|\.)(\d{1,2})(?!\d|,|\.):(?<!\d|\.)(\d{2})(?!\d|,|\.)/, '\1：\2')
     #### nkfで文字列の変換
     ## オプション
+    ## 『-w』
+    # UTF-8で出力するオプション
     ## 『-m0』
     # MIME decode/encodeのためのオプション。
     # nkf はデフォルトでMIME encoded-wordのデコードを試みるため、
@@ -42,6 +44,6 @@ class String
     ## 『-X』
     # -Xを指定すると、nkfは半角カタカナを自動的に全角カタカナに変換する。
     # この動作を望まない場合は-xを指定する。
-    NKF.nkf("-wXm0", self)
+    NKF.nkf("-w -X -m0", self)
   end
 end
