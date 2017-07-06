@@ -14,6 +14,7 @@ end
 
 
 class String
+  
   include AddMethod
 
   def clean_char!
@@ -46,4 +47,20 @@ class String
     # この動作を望まない場合は-xを指定する。
     NKF.nkf("-w -X -m0", self)
   end
+
+  def namaezoroe!
+    sei_mei = self.split("　")
+    sei = sei_mei[0]
+    mei = sei_mei[1]
+    sei_s = sei_mei[0].size
+    mei_s = sei_mei[1].size
+    if sei_s >= 3 && mei_s >= 2 || sei_s >= 2 && mei_s >= 3
+      "#{ sei }#{ mei }"
+    elsif sei_s == 1 && mei_s == 2 || sei_s == 2 && mei_s == 1
+      "#{ sei }　　#{ mei }"
+    else
+      "#{ sei }　#{ mei }"
+    end
+  end
+
 end
