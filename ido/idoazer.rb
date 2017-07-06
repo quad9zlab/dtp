@@ -16,11 +16,11 @@ renw_name = []
 renw_date = []
 renw_assoc = []
 # 作業開始
-files.each do |mei|
+files.each do |fn|
   # 元ファイル名を変数に格納する。
-  orgn = File.basename(mei, ".*")
+  orgfn = File.basename(fn, ".*")
   # 空行削除するなどテキストの体裁を整えて上書き保存する。
-  File.open("#{ mei }", "r") do |f|
+  File.open("#{ fn }", "r") do |f|
     i = f.read
     # 空行を削除
     i.gsub!(/^\n/, "")
@@ -33,10 +33,10 @@ files.each do |mei|
     i.gsub!(pattern2, ",")
     i.gsub!(pattern3, ",")
     # 元のファイルに上書き保存。
-    File.open("#{ mei }", "w") { |f| f.puts i }
+    File.open("#{ fn }", "w") { |f| f.puts i }
   end
   # 配列にするために正規表現で内容を整理する。
-  File.open("#{ mei }", "r") do |f|
+  File.open("#{ fn }", "r") do |f|
     # ファイルの内容を配列に格納する。
     f.each_line do |l|
       # 行末の改行を削除
@@ -48,26 +48,26 @@ files.each do |mei|
     csv = CSV.generate('', write_headers: true, headers: my_headers) do |c|
       lines.each { |i| c << i }
     end
-    File.open("#{ orgn }.csv", 'w+') { |f| f.puts csv }
+    File.open("#{ orgfn }.csv", 'w+') { |f| f.puts csv }
     # CSVから列を抽出してよしなに内容を変更していく。
-    table = CSV.table("#{ orgn }.csv", headers: :first_row)
+    table = CSV.table("#{ orgfn }.csv", headers: :first_row)
     table[:number].each { |i| renw_number << "【会員番号 #{ i.to_i }】" }
-    table[:name].each { |i| renw_name << "#{ i.namaezoroe!.to_s }氏" }
+    table[:name].each { |i| renw_name << "#{ i.to_s.namaezoroe! }氏" }
     table[:date].each { |i| renw_date << "▼#{ i.to_s }付" }
-    table[:assoc].each { |i|
+    table[:assoc].each do |i|
       unless i == nil
         renw_assoc << "　#{ i.to_s }弁護士会"
       else
         renw_assoc << nil
       end
-    }
+    end
   end
   contents = [renw_name, renw_number, renw_date, renw_assoc].transpose
   renw_csv = CSV.generate() do |csv|
     contents.each { |i| csv << i }
   end
   # CSVファイルに上書きして保存する。
-  File.open("#{ orgn }.csv", 'w+') do |file|
+  File.open("#{ orgfn }.csv", 'w+') do |file|
     file.puts renw_csv
   end
 end
