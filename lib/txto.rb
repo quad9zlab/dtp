@@ -14,7 +14,7 @@ end
 
 
 class String
-  
+
   include AddMethod
 
   def clean_char!
@@ -48,6 +48,7 @@ class String
     NKF.nkf("-w -X -m0", self)
   end
 
+  # 氏名を5文字で整理する。
   def namaezoroe!
     sei_mei = self.split("　")
     sei = sei_mei[0]
