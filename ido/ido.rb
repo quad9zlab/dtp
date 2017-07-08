@@ -3,50 +3,50 @@ require 'yaml'
 require 'pp'
 require 'csv'
 require './txt2yml'
+require './rubyfuri'
 
 files = Dir.glob("*.txt")
 files.txt2yml
+yamls = Dir.glob("*.yml")
+yamls.each do |y|
+  hash = YAML.load_file(y)
+  pp renw = hash.rubyfuri
+  pp hash
+end
+
+exit
+  orgfn = File.basename(y, ".yml")
+  # 配列を初期化。
+  arr = []
+  # # 2次配列を作る。思いっきりベタなやり方だけれどこれしか思いつかない。
+  # hash.each do |key, val|
+  #   arr << [key,
+  #           val["name"],
+  #           val["ruby"],
+  #           val["date"],
+  #           val["office"],
+  #           val["pcode"],
+  #           val["zip1"],
+  #           val["zip2"],
+  #           val["tel"],
+  #           val["fax"]
+  #          ]
+  # end
+  # # CSV用にヘッダーを入れた配列を下準備する。
+  # my_headers = %w[id name ruby date office pcode zip1 zip2 tel fax @psd]
+  # # CSV用にインスタンスを作成。
+  # contents = CSV.generate("", :headers => my_headers, :write_headers => true) do |csv|
+  #   arr.each { |i| csv << i }
+  # end
+  # # CSVファイルとして書き込む。
+  # File.open("#{ orgfn }.csv", 'w+:UTF-16:UTF-8') do |f|
+  #   f.puts contents
+  # end
 
 exit
 
 # =========================================================================================
 # coding: utf-8
-# YAMLファイルの読み込み。
-ymls = Dir.glob("*.yml")
-
-ymls.each do |y|
-  ## 初期化
-  # hash形式で書いたYAMLファイルをハッシュとして書き出す。
-  hash = YAML.load_file(y)
-  # CSV書き出し用にベースファイル名を取得。
-  fn = File.basename(y, ".yml")
-  # 配列を初期化。
-  arr = []
-  ## 2次配列を作る。思いっきりベタなやり方だけれどこれしか思いつかない。
-  hash.each do |key, val|
-    arr << [key,
-            val["name"],
-            val["ruby"],
-            val["date"],
-            val["office"],
-            val["address"]["pcode"],
-            val["address"]["zip1"],
-            val["address"]["zip2"],
-            val["contact"]["tel"],
-            val["contact"]["fax"]
-           ]
-  end
-  # CSV用にヘッダーを入れた配列を下準備する。
-  header = %w[id name ruby date office pcode zip1 zip2 tel fax @psd]
-  # CSV用にインスタンスを作成。
-  contents = CSV.generate("", :headers => header, :write_headers => true) do |csv|
-    arr.each { |a| csv << a }
-  end
-  # CSVファイルとして書き込む。
-  File.open("#{ fn }.csv", 'w+:UTF-16:UTF-8') do |f|
-    f.puts contents
-  end
-end
 
 # =========================================================================================
 # # 配列にするために正規表現で内容を整理する。

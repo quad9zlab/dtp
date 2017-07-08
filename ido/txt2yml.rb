@@ -24,16 +24,18 @@ class Array
         i.each_line do |l|
           # 数字から始まるラインの処理と配列化して置き換える。
           if l =~ /^\d/
+            # 先頭のIDをキーにする。
+            l.sub!(/(\d{5})/, '\1' + ":")
             # 正規表現パターン『先頭の5つの数字列と直後の空白』
-            l.gsub!(/(?<=\d{5})[[:blank:]]+/, ","+"  name: ")
+            l.gsub!(/(?<=\d{5}:)[[:blank:]]+/, "," + "  name: ")
             # 正規表現パターン『括弧に囲まれたふりがなと直後の空白』
-            l.gsub!(/（(.+?)）[[:blank:]]+/, ","+"  ruby: "+'\1'+","+"  date: ")
+            l.gsub!(/（(.+?)）[[:blank:]]+/, "," + "  ruby: " + '\1' + "," + "  date: ")
             l.chomp!
             l = l.split(",")
           # それ以外のラインの処理。
           else
             l.gsub!(/事務所名称[[:blank:]]+|事務所名称/, "  office: ")
-            l.gsub!(/郵便番号[[:blank:]]+|郵便番号/, "  zipcode: ")
+            l.gsub!(/郵便番号[[:blank:]]+|郵便番号/, "  pcode: ")
             l.gsub!(/住所1[[:blank:]]+|住所1/, "  zip1: ")
             l.gsub!(/住所2[[:blank:]]+|住所2/, "  zip2: ")
             l.gsub!(/電話番号1[[:blank:]]+|電話番号1/, "  tel: ")
