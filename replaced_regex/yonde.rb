@@ -3,7 +3,7 @@
 # 中身を任意の整形機能を付与してからテキストに書き出すコード
 
 require "yomu"
-require "../lib/txto"
+require "../lib/iString"
 
 # $bundle exec ruby yomu.rb [ext（ドッドは要らない、拡張子だけ）]
 # ext =>doc, docx, xls, xlsx, ppt, pptx, rtf, pdf
@@ -25,14 +25,14 @@ Dir.glob("*.#{ ext }").each do |fn|
     yins.text.each_line do |line|
       case ext
       when /docx|rtf/
-        # # インスタンスをlineに代入しないとNKFの変換が反映出来ない。
-        # # そのため、下記2行のように書くか、
-        # line = line.clean_copy!
+        # インスタンスをlineに代入しないとNKFの変換が反映出来ない。
+        # そのため、下記2行のように書くか、
+        # line = line.clean_char!
         # file.puts line
-        # # もしくは、1行で下記のように書く方法になる。
-        file.puts line.clean_copy!
+        # もしくは、1行で下記のように書く方法になる。
+        file.puts line.clean_char!
       when /pdf|xls|xlsx|ppt|pptx/
-        line = line.clean_copy!
+        line = line.clean_char!
         # gsub!では、出来たインスタンスが何もしなくてもリターンされる。
         line.empty_line!
         file.puts line

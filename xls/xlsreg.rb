@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'csv'
 require 'roo'
-require "../lib/txto"
+require "../lib/iString"
 
 # カレントディレクトリにあるExcelファイルの読み込みをする。
 msexcels = Dir.glob("*.xlsx")

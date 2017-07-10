@@ -1,6 +1,7 @@
 # coding: utf-8
 require "csv"
-require "../lib/txto"
+require "../lib/iString"
+require "../lib/iArray"
 
 # ディレクトリ内のテキストファイルを抽出
 files = Dir.glob("*.txt")

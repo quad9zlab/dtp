@@ -37,4 +37,3 @@ puts fnames
 #   table[:@psd] << fns
 #   # c.puts table[:@psd] << fns psd_name
 # end
-

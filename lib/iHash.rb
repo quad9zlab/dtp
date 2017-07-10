@@ -1,3 +1,6 @@
+require "fileutils"
+require "../lib/iString"
+
 class Hash
   def rubyfuri
     form = []
@@ -27,5 +30,20 @@ class Hash
       end
     end
     return form
+  end
+
+  def photonawa
+    psds = Dir.glob("*.psd")
+    # orgfn = File.basename(y, ".psd")
+    name = []; form = []
+    self.each { |key, val| name << val["name"].namaezoroe! }
+
+    psds.map! { |fn|
+      orgfn = File.basename(fn, ".psd")
+      renew_fn = "img" + orgfn+ "_" + name.shift + ".psd"
+      FileUtils.mv(fn, renew_fn )
+      form << renew_fn
+    }
+    form
   end
 end

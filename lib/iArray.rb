@@ -1,7 +1,7 @@
 # coding: utf-8
-require "../lib/txto"
 
 class Array
+
   def txt2yml
     # ファイル毎に処理をする。
     self.each do |fn|
@@ -50,4 +50,5 @@ class Array
       end
     end
   end
+
 end

@@ -8,7 +8,7 @@ require 'csv'
 require 'roo'
 require 'nkf'
 require 'fileutils' #=> 無くても動いているがいいのか。
-require '../lib/txto'
+require '../lib/iString'
 
 
 # エクセルファイルのオブジェクトを取得
