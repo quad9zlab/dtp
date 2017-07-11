@@ -3,56 +3,59 @@ require 'csv'
 require 'roo'
 require '../lib/iArray'
 
-# エクセルファイルのオブジェクトを取得
+# 下準備
+# エクセルファイルからCSVファイルを生成する。
 Dir.glob("*.xlsx").xlseiri
-
-exit
-
+# 対象は1ファイルなので、先頭のファイルを配列から抜き出す。
+csv = Dir.glob("*.csv").shift
 # CSVファイルを読み込む。
+orgfn = File.basename(csv, ".*")
 # 一行目をヘッダーとして、CSVクラスのテーブルオブジェクトにする。
-table = CSV.table("#{ origin_name }.csv", headers: :first_row)
-# coloumnを配列で初期化する。
-daytime_col = []
-credit_col  = []
-content_col = []
-require_col = []
-# to object => daytime_col
+table = CSV.table(csv, headers: :first_row)
+# 別名で書き込むCSVのcoloumnを配列で初期化する。
+daytime_col = []; credit_col  = []; content_col = []; require_col = [];
+
+# 本番。再生産するCSVファイルのコラムの中身を生成する。
+# => daytime_col
 table[:kind].zip(table[:consult], table[:month], table[:day], table[:time]) do |kind, consult, month, day, time|
   daytime = "【#{ kind }】【#{ consult }】▼#{ month }#{ day }▼#{ time }"
   # 文字列の検索置換
   daytime.gsub!(/(\d\d?)月(\d\d?)日（(月|火|水|木|金|土|日)）/,'\1/\2\3')
-  #=> object
+  # daytimeコラムに配列を書き込んでいく。
   daytime_col << daytime
 end
-# to object => credit_col
+
+# => credit_col
 credit_col = table[:credit]
-# to object => content_col
+
+# => content_col
 table[:content].zip(table[:speaker]) do |content, speaker|
   # 文字列の検索置換
-  content.gsub!(/\n/, '●')
+  content.gsub!(/\n/, '▼')
   speaker = speaker.to_s
   speaker.gsub!(/\n/, '、')
   speaker.gsub!(/^/, '◇')
-  #=> object
+  # content_colコラムに配列を書き込んでいく。
   content_col << "#{ content }▼#{ speaker }"
 end
-# to object => require_col
-table[:committe].zip(table[:requ], table[:charge], table[:nursery], table[:place]) do
-  |committe, requ, charge, nursery, place|
+
+# => require_col
+table[:committe].zip(table[:requ], table[:charge], table[:nursery], table[:place]) do |committe, requ, charge, nursery, place|
   # 文字列の検索置換
-  committe.gsub!(/^/, '◆')
-  committe.gsub!(/\n/, '●')
-  requ.gsub!(/\n/, '●')
-  requ.gsub!(/^/, '□')
-  charge.gsub!(/\n/, '●')
-  # place.gsub!(/^/, '■')
-  #=> object
+  committe.gsub!(/^/, '◆')   # ピクトグラムに置換えるための記号を行頭に挿入する。
+  committe.gsub!(/\n/, '●')  # 強制改行のマークを付与する。
+  requ.gsub!(/^/, '□')       # ピクトグラムに置換えるための記号を行頭に挿入する。
+  requ.gsub!(/\n/, '●')      # 強制改行のマークを付与する。
+  charge.gsub!(/\n/, '●')    # 強制改行のマークを付与する。
+  place.gsub!(/^/, '■')      # ピクトグラムに置換えるための記号を行頭に挿入する。
+  # 保育の有り無しで文字列を変更する。
   if nursery =~ /○/
     require_col << "#{ committe }▼#{ requ }／#{ charge }▼保育あり▼#{ place }"
    else
     require_col << "#{ committe }▼#{ requ }／#{ charge }▼#{ place }"
   end
 end
+
 # CSVを生成する。
 # ヘッダーを生成する。
 renew_header = ["daytime", "credit", "contents", "require"]
@@ -65,9 +68,15 @@ renew_csv = CSV.generate('', write_headers: true, headers: renew_header) do |csv
   trsp_arr.each { |i| csv << i }
 end
 # CSVファイルに上書きして保存する。
-File.open("#{ origin_name }.csv", 'w+') do |file|
+File.open("#{ orgfn }.csv", 'w+') do |file|
   file.puts renew_csv
 end
+
+
+
+
+exit
+
 
 
 

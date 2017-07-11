@@ -5,6 +5,9 @@ require "../lib/iString"
 
 class Array
 
+  # ==========
+  # テキストをYAMLファイルとして書き出すメソッド
+  # ただし、このコードは『ido.rb』に特化しているので汎用的には使えない。
   def txt2yml
     # ファイル毎に処理をする。
     self.each do |fn|
@@ -54,6 +57,9 @@ class Array
     end
   end
 
+  # ==========
+  # 読み込んだエクセルファイルの内容を正規表現で整理、セル内改行を調整して
+  # CSVファイルとして書き出すメソッド
   def xlseiri
     renw_row = []
     # ExcelファイルをCSVファイルに変換して保存する。(ファイルが単一か複数かは問わない。)
