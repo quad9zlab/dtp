@@ -1,3 +1,5 @@
+# 『iString#namaezoroe!』で同じことをやっているので外す。
+
 class Array
   def transname!
     renw_name = []
