@@ -1,5 +1,3 @@
-# coding: utf-8
-
 # 最初に元原稿のエクセルのヘッダーの名称を変更。
 # header, content
 

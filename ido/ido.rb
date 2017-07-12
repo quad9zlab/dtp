@@ -1,4 +1,3 @@
-# coding: utf-8
 require 'yaml'
 require 'pp'
 require 'csv'

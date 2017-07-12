@@ -1,4 +1,3 @@
-# coding: utf-8
 require "csv"
 require "../lib/iString"
 require "../lib/iArray"
