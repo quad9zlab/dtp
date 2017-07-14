@@ -24,9 +24,8 @@ day_place = []
 table[:day].zip(table[:time], table[:place]) do |day, time, place|
   day_place << "■【日時】#{ day }#{ time }▼【場所】#{ place }"
 end
-# CSVに書き込むための配列を初期化しておく。
+# CSVに書き込むための配列に2つの配列を統合したものを格納する。
 renew_csv = []
-# 2つの配列を一つにまとめる。
-content.zip(day_place) { |e| renew_csv << content.shift + "▼" + day_place.shift }
+content.zip(day_place) {|a| renew_csv << a.join("▼") }
 # さきほど作成したCSVファイルに、内容を上書きして保存する。
 File.open("#{ orgfn }.csv", 'w+') { |file| file.puts renew_csv }
