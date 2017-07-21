@@ -16,13 +16,15 @@ table = CSV.table(csv, headers: :first_row)
 # dayコラムの書式を変更する。
 table[:day].each { |s| s.gsub!(/(\/)(\d\d?)(?=（.+?）)/, '月\2日') }
 # 別名で書き込むCSVのcoloumnを配列で初期化する。
-# 内容を納めるコラム。
-content = table[:content]
+# 内容を納めるコラム。行頭に正規表現スタイル用の印を付与する。
+mark = []
+table[:content].each { |s| mark << "■" + s }
+content = mark
 # 日時と場所のコラムを初期化しておく。
 day_place = []
 # 本番。再生産するCSVファイルのコラムの中身を生成する。
 table[:day].zip(table[:time], table[:place]) do |day, time, place|
-  day_place << "■【日時】#{ day }#{ time }▼【場所】#{ place }"
+  day_place << "【日時】#{ day }#{ time }▼【場所】#{ place }"
 end
 # CSVに書き込むための配列に2つの配列を統合したものを格納する。
 renew_csv = []
