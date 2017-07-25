@@ -27,7 +27,7 @@ table.headers.each do |h|
 end
 
 # headerコラム
-add = Proc.new { |x, y| x + y }
+add = ->(x, y) { x + y }
 prefix = add.curry.("■")
 header = table[:header].map! { |i| prefix.("#{ i }") }
 text = header.zip(table[:content]).flatten.uniq.join("\n")
