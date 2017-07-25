@@ -1,20 +1,34 @@
 require 'highline'
 
+##### 平綴じ
+#hl = HighLine.new
+#order = []
+#lambda_obj = ->(pnum) {
+#  i = pnum.to_i
+#  m = i / 4
+#  if i >= 4 && (i % 4).zero?
+#    [*1..i].zip([2, 0, 1, -3] * m) { |row| order << row[0] + row[1] }
+#    p order
+#  else
+#    p "4ページ以上か、4の倍数になるページ数でPDFを作成して入力をやり直してください。"
+#  end
+#}
+#ins = hl.ask("4折の面付です。配置するPDFのページ数を入力してください。", lambda_obj)
+
+##### 中綴じ
 hl = HighLine.new
-order = []
 lambda_obj = ->(pnum) {
-  i = pnum.to_i
-  m = i / 4
-  if i >= 4 && (i % 4).zero?
-    [*1..i].zip([2, 0, 1, -3] * m) { |row| order << row[0] + row[1] }
-    p order
+  pn = pnum.to_i
+  const = pn + 1
+  order = []
+  if pn >= 4 && (pn % 4).zero?
+    [*1..pn / 2].map { |n| order << [const - n, n] }
   else
-    p "4P以上か、4の倍数になるページ数でPDFを作成して入力をやり直してください。。"
+    p "4ページ以上か、4の倍数になるページ数でPDFを作成して入力をやり直してください。"
   end
+  p order.flatten
 }
 ins = hl.ask("4折の面付です。配置するPDFのページ数を入力してください。", lambda_obj)
-
-
 
 exit
 
@@ -37,7 +51,8 @@ end
 
 p plpp_hira  # .flatten            #=>一次配列にするオプション
 
-
+####### 右側のページが上から順に1からページ数の半分まで縦にならんでる！！！
+####### そこでペアを組んでいく作戦だったのか！
 # 左・中綴じで配置するPDFのページ順を作成するコード
 # 初期化
 dai = 6                            #=> 折
@@ -55,8 +70,6 @@ pattern.zip(pair).each_slice 2 do |a, b|
 end
 
 p plpp_naka  # .flatten            #=>一次配列にするオプション
-
-exit
 
 # 最初のヒントになったコード
 plpp = [1, 2, 3, 4, 5];
