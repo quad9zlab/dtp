@@ -1,5 +1,24 @@
-# coding: utf-8
+require 'highline'
 
+hl = HighLine.new
+order = []
+lambda_obj = ->(pnum) {
+  i = pnum.to_i
+  m = i / 4
+  if i >= 4 && (i % 4).zero?
+    [*1..i].zip([2, 0, 1, -3] * m) { |row| order << row[0] + row[1] }
+    p order
+  else
+    p "4P以上か、4の倍数になるページ数でPDFを作成して入力をやり直してください。。"
+  end
+}
+ins = hl.ask("4折の面付です。配置するPDFのページ数を入力してください。", lambda_obj)
+
+
+
+exit
+
+#### Old Version
 # 左・平綴じで配置するPDFのページ順を作成するコード
 # 初期化
 dai = 6                            #=> 折
