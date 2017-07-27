@@ -23,16 +23,13 @@ table[:kind].zip(table[:consult], table[:month], table[:day], table[:time]) do |
   # daytimeコラムに配列を書き込んでいく。
   daytime_col << daytime
 end
-
 # => credit_col
 credit_col = table[:credit]
-
 # => content_col
 table[:content].zip(table[:speaker]) do |content, speaker|
   # 文字列の検索置換
-  content.gsub!(/\n/, '▼')
   speaker = speaker.to_s
-  speaker.gsub!(/\n/, '、')
+  speaker.gsub!(/▼/, '、')
   speaker.gsub!(/^/, '◇')
   # content_colコラムに配列を書き込んでいく。
   content_col << "#{ content }▼#{ speaker }"
@@ -42,10 +39,10 @@ end
 table[:committe].zip(table[:requ], table[:charge], table[:nursery], table[:place]) do |committe, requ, charge, nursery, place|
   # 文字列の検索置換
   committe.gsub!(/^/, '◆')   # ピクトグラムに置換えるための記号を行頭に挿入する。
-  committe.gsub!(/\n/, '●')  # 強制改行のマークを付与する。
+  committe.gsub!(/▼/, '●')  # 強制改行のマークを付与する。
   requ.gsub!(/^/, '□')       # ピクトグラムに置換えるための記号を行頭に挿入する。
-  requ.gsub!(/\n/, '●')      # 強制改行のマークを付与する。
-  charge.gsub!(/\n/, '●')    # 強制改行のマークを付与する。
+  requ.gsub!(/▼/, '●')      # 強制改行のマークを付与する。
+  charge.gsub!(/▼/, '●')    # 強制改行のマークを付与する。
   place.gsub!(/^/, '■')      # ピクトグラムに置換えるための記号を行頭に挿入する。
   # 保育の有り無しで文字列を変更する。
   if nursery =~ /○/
@@ -70,9 +67,6 @@ end
 File.open("#{ orgfn }.csv", 'w+') do |file|
   file.puts renew_csv
 end
-
-
-
 
 exit
 
