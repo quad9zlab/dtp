@@ -72,8 +72,10 @@ class Array
       table.headers.each do |h|
         # # セル内の改行を取り去る
         table[h].each do |cell|
-          cell.gsub!(/\n/, '▼') if cell.class == String
-          cell.clean_char! if cell.class == String
+          if cell.class == String
+            cell.gsub!(/\n/, '▼')
+            cell.clean_char!
+          end
           table[h] << cell
         end
       end

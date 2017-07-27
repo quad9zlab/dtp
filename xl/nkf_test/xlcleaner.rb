@@ -1,6 +1,6 @@
 require "nkf"
-require '../lib/iArray'
-require '../lib/iString'
+require './MyArray'
+require './MyString'
 
 # エクセルファイルから文字を整形した上で、CSVファイルとして再生成する。
 Dir.glob("*.xlsx").xlseiri
