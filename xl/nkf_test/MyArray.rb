@@ -7,7 +7,6 @@ class Array
   # 読み込んだエクセルファイルの内容を正規表現で整理、セル内改行を調整して
   # CSVファイルとして書き出すメソッド
   def xlseiri
-    renw_row = []
     # ExcelファイルをCSVファイルに変換して保存する。(ファイルが単一か複数かは問わない。)
     self.each do |xl|
       # 読み込んだファイルの拡張子より前の名前をオブジェクト化する。
@@ -19,15 +18,13 @@ class Array
       table.headers.each do |h|
         # # セル内の改行を取り去る
         table[h].each do |cell|
-          if cell.class == String
-            cell.gsub!(/\n/, '▼')
-            cell.clean_char!
-          end
-          table[h] << cell
+          cell.gsub!(/\n/, '▼') if cell.class == String
+          cell.clean_char! if cell.class == String
+          # table[h] << NKF.nkf("-wXm0", cell)  if cell.class == String
         end
-      end
-      File.open("#{ origin_name }.csv", 'w+') do |file|
-        file.puts table
+        File.open("#{ origin_name }.csv", 'w+') do |file|
+          file.puts table
+        end
       end
     end
   end

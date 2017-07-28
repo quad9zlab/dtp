@@ -6,10 +6,10 @@ require '../lib/iString'
 Dir.glob("*.xlsx").xlseiri
 # 対象は1ファイルなので、先頭のファイルを配列から抜き出す。
 csvfn = Dir.glob("*.csv").shift
-# CSVファイルを読み込む。
+# ファイルのベース名を変数に格納しておく。
 orgfn = File.basename(csvfn, ".*")
-# 一行目をヘッダーとして、CSVクラスの
 renew = []
+# 本番
 File.open("#{ csvfn }", "r") do |c|
   c.each_line { |l| renew << NKF.nkf("-wXm0", l) }
   File.open("#{ orgfn }.csv", "w+") { |f| f.puts renew }
