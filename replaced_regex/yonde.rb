@@ -21,14 +21,13 @@ Dir.glob("*.#{ ext }").each do |fn|
   # 主戦場。書類によって空行を生かすか取るかを変えて処理する。
   case ext
   when /docx?|rtf/
-     # Yomu#textメソッドでStringクラスに変換してから文字列の置換えをする。
     rf = yomu.text.clean_char!
   when /pdf|xlsx?|pptx?/
     rf = yomu.text.clean_char!.empty_line!
   end
+
   # 別名でテキストファイルとして書き出しをする。
   File.open("#{ orgfn }_formed.txt", "w+") { |doc| doc.puts rf }
 end
-
 
 exit
