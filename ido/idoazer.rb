@@ -41,6 +41,7 @@ files.each do |fn|
     f.each_line do |l|
       # 行末の改行を削除
       l.chomp!
+      l.gsub!(/^0+/, '') #=> 先頭が0の時、誤変換するのを防ぐための処理
       # CSV化するための下準備。配列に変換する。
       lines << l.split(",")
     end

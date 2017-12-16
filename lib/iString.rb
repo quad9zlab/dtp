@@ -49,9 +49,9 @@ class String
     if sei_s >= 3 && mei_s >= 2 || sei_s >= 2 && mei_s >= 3
       "#{ sei }#{ mei }"
     elsif sei_s == 1 && mei_s == 2 || sei_s == 2 && mei_s == 1
-      "#{ sei }　　#{ mei }"
+      "#{ sei }\u3000\u3000#{ mei }"
     else
-      "#{ sei }　#{ mei }"
+      "#{ sei }\u3000#{ mei }"
     end
   end
 

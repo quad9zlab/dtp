@@ -79,4 +79,19 @@ class Array
       File.open("#{ origin_name }.csv", 'w+') { |file| file.puts table }
     end
   end
+
+  # 写真の名前を取得して配列に格納する。
+  def plus_photo_name
+    psds = Dir.glob("*.psd")
+    renew_fn = []
+    photo_name = []
+
+    psds.map! { |fn|
+      orgfn = File.basename(fn, ".psd")
+      renew_fn = orgfn + "_" + self.shift + ".psd"
+      FileUtils.mv(fn, renew_fn )
+      photo_name << renew_fn
+    }
+    return photo_name
+  end
 end

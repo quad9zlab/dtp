@@ -40,7 +40,7 @@ class Hash
 
     psds.map! { |fn|
       orgfn = File.basename(fn, ".psd")
-      renew_fn = "img" + orgfn+ "_" + name.shift + ".psd"
+      renew_fn = "img" + orgfn + "_" + name.shift + ".psd"
       FileUtils.mv(fn, renew_fn )
       form << renew_fn
     }

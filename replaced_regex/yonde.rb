@@ -25,9 +25,6 @@ Dir.glob("*.#{ ext }").each do |fn|
   when /pdf|xlsx?|pptx?/
     rf = yomu.text.clean_char!.empty_line!
   end
-
   # 別名でテキストファイルとして書き出しをする。
   File.open("#{ orgfn }_formed.txt", "w+") { |doc| doc.puts rf }
 end
-
-exit
