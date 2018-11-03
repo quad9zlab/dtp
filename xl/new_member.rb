@@ -63,23 +63,12 @@ File.open("#{ csvfn }", "r") do |csv|
       end
     end
   end
-  # pp name_only
-  # pp table[:num].size
-  # pp name_only.size
-  # pp table[:ruby].size
-  # pp table[:zip_code].size
-  # pp table[:zip1].size
-  # pp table[:zip2].size
-  # pp table[:office].size
-  # pp table[:tel].size
-  # pp table[:fax].size
-  # pp name_ruby.size
-  # pp table[:entry_num].size
-  # pp table[:place].size
+
+  # photo_name = Dir.glob("*.psd").plus_photoname
 
   # 写真の名前を取得して配列に格納する。
   psds = Dir.glob("*.psd")
-  renew_fn = []
+  renew_fn = ""
   photo_name = []
   name = name_only.dup
   psds.map! { |fn|
@@ -106,22 +95,4 @@ File.open("#{ csvfn }", "r") do |csv|
   File.open("#{ orgfn }.csv", "w+:UTF-16:UTF-8") do |file|
     file.puts renew_csv
   end
-
-  # # CSV用にヘッダーを入れた配列を下準備する。
-#
-#
-  # # CSV用にインスタンスを作成。
-  # contents = CSV.generate("", :headers => my_headers, :write_headers => true) do |csv|
-  #   form.each { |i| csv << i }
-  # end
-  # # CSVファイルとして書き込む。
-  # File.open("#{ orgfn }.csv", "w+:UTF-16:UTF-8") do |f|
-  #   f.puts contents
-  # end
-
-
 end
-
-# 列を抜き出してルビの処理がしたい。
-## 2列の配列を書き出して、ハッシュに変換
-# 列を抜き出して文字列の先頭に丸数字を付与していきたい。

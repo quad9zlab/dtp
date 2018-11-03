@@ -33,14 +33,13 @@ class Hash
   end
 
   def photonawa
-    psds = Dir.glob("*.psd")
-    # orgfn = File.basename(y, ".psd")
+    psds = Dir.glob("*.psd").sort
     name = []; form = []
     self.each { |key, val| name << val["name"].namaezoroe! }
 
     psds.map! { |fn|
       orgfn = File.basename(fn, ".psd")
-      renew_fn = "img" + orgfn + "_" + name.shift + ".psd"
+      renew_fn = "img_" + orgfn + "_" + name.shift + ".psd"
       FileUtils.mv(fn, renew_fn )
       form << renew_fn
     }

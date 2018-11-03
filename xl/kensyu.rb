@@ -38,12 +38,12 @@ end
 # => require_col
 table[:committe].zip(table[:requ], table[:charge], table[:nursery], table[:place]) do |committe, requ, charge, nursery, place|
   # 文字列の検索置換
-  committe.gsub!(/^/, '◆')   # ピクトグラムに置換えるための記号を行頭に挿入する。
-  committe.gsub!(/▼/, '●')  # 強制改行のマークを付与する。
-  requ.gsub!(/^/, '□')       # ピクトグラムに置換えるための記号を行頭に挿入する。
-  requ.gsub!(/▼/, '●')      # 強制改行のマークを付与する。
-  charge.gsub!(/▼/, '●')    # 強制改行のマークを付与する。
-  place.gsub!(/^/, '■')      # ピクトグラムに置換えるための記号を行頭に挿入する。
+  committe.to_s.gsub!(/^/, '◆')   # ピクトグラムに置換えるための記号を行頭に挿入する。
+  committe.to_s.gsub!(/▼/, '●')  # 強制改行のマークを付与する。
+  requ.to_s.gsub!(/^/, '□')       # ピクトグラムに置換えるための記号を行頭に挿入する。
+  requ.to_s.gsub!(/▼/, '●')      # 強制改行のマークを付与する。
+  charge.to_s.gsub!(/▼/, '●')    # 強制改行のマークを付与する。
+  place.to_s.gsub!(/^/, '■')      # ピクトグラムに置換えるための記号を行頭に挿入する。
   # 保育の有り無しで文字列を変更する。
   if nursery =~ /○/
     require_col << "#{ committe }▼#{ requ }／#{ charge }▼保育あり▼#{ place }"

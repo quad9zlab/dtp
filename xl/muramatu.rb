@@ -12,7 +12,7 @@ require '../lib/iString'
 # エクセルファイルのオブジェクトを取得
 io = Dir.glob("*.xlsx").shift
 fn = File.basename(io, ".xlsx")
-
+puts fn
 # エクセルデータのインスタンスをCSVに変換する。オプションとして別名で保存する。
 Roo::Excelx.new(io).to_csv("#{ fn }.csv")
 # 改めてCSVファイルを開く。
@@ -29,7 +29,7 @@ end
 # headerコラム
 add = ->(x, y) { x + y }
 prefix = add.curry.("■")
-header = table[:header].map! { |i| prefix.("#{ i }") }
+header = table[:classified].map! { |i| prefix.("#{ i }") }
 text = header.zip(table[:content]).flatten.uniq.join("\n")
 File.open("#{ fn }.txt", 'w') do |f|
   f.puts text

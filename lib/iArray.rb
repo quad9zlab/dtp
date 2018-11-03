@@ -80,18 +80,17 @@ class Array
     end
   end
 
-  # 写真の名前を取得して配列に格納する。
-  def plus_photo_name
-    psds = Dir.glob("*.psd")
-    renew_fn = []
-    photo_name = []
-
-    psds.map! { |fn|
-      orgfn = File.basename(fn, ".psd")
-      renew_fn = orgfn + "_" + self.shift + ".psd"
-      FileUtils.mv(fn, renew_fn )
-      photo_name << renew_fn
-    }
-    return photo_name
-  end
+  # # ==========
+  # # 写真の名前を取得して配列に格納する。
+  # def plus_photoname
+  #   renew_fn = []
+  #   name = self.dup
+  #   name.map! { |fn|
+  #     psdfn = File.basename(fn, ".psd")
+  #     renew_fn << psdfn + "_" + name.shift + ".psd"
+  #     FileUtils.mv(fn, renew_fn )
+  #     name << renew_fn
+  #   }
+  #   return name
+  # end
 end
